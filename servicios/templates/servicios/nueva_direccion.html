@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Nueva Dirección{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Nueva Dirección para {{ cliente.nombre }} {{ cliente.apellido }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-success">
+            <i class="fas fa-save"></i> Guardar Dirección
+        </button>
+
+        <a href="{% url 'detalle_cliente' cliente.rut %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </form>
+</div>
+{% endblock %}

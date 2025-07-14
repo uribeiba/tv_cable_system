@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Planes Disponibles{% endblock %}
+
+{% block header %}Planes de TV Cable{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="text-center mb-4">Planes Disponibles</h3>
+    <div class="row">
+        {% for plan in planes %}
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title text-center">{{ plan.categoria }}</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>Precio:</strong> ${{ plan.precio_base|floatformat:2 }}<br>
+                        <strong>Descripción:</strong> {{ plan.descripcion }}
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="card-footer text-center">
+                        <a href="{% url 'contratar_servicio' %}" class="btn btn-success w-100">Contratar</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

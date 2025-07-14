@@ -1,0 +1,43 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: sans-serif; font-size: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #999; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+    <title>Reporte de Pagos</title>
+</head>
+<body>
+    <h2>Reporte de Pagos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Contrato</th>
+                <th>Fecha Pago</th>
+                <th>Monto</th>
+                <th>Método</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pago in pagos %}
+            <tr>
+                <td>{{ pago.contrato.cliente.nombre_completo }}</td>
+                <td>{{ pago.contrato.id }}</td>
+                <td>{{ pago.fecha_pago|date:"d/m/Y" }}</td>
+                <td>${{ pago.monto|floatformat:0|intcomma }}</td>
+                <td>{{ pago.get_metodo_pago_display }}</td>
+                <td>{{ pago.get_estado_display }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No hay pagos.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

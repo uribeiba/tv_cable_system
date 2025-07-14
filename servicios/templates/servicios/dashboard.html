@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Dashboard</h1>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Pagos Pendientes</h5>
+                    <p class="card-text display-4">{{ pagos_pendientes }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Pagos</h5>
+                    <p class="card-text display-4">{{ total_pagos }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Monto Pagado</h5>
+                    <p class="card-text display-4">${{ total_monto_pagado|intcomma }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Contratos Vencidos</h5>
+                    <p class="card-text display-4">{{ contratos_vencidos }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="mt-4">Últimos Pagos Registrados</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Contrato</th>
+                <th>Fecha Pago</th>
+                <th>Monto</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pago in ultimos_pagos %}
+            <tr>
+                <td>{{ pago.contrato.cliente.nombre_completo }}</td>
+                <td>{{ pago.contrato.id }}</td>
+                <td>{{ pago.fecha_pago|date:"d/m/Y" }}</td>
+                <td>${{ pago.monto|intcomma }}</td>
+                <td>{{ pago.get_estado_display }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No hay pagos recientes.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

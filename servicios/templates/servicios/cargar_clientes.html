@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargar Clientes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .success {
+            color: green;
+            margin-bottom: 20px;
+        }
+        .error {
+            color: red;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cargar Clientes desde Excel</h1>
+
+    <!-- Mostrar errores generales -->
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <!-- Mostrar clientes nuevos -->
+    {% if nuevos %}
+        <div class="success">
+            <h3>Clientes nuevos agregados:</h3>
+            <ul>
+                {% for cliente in nuevos %}
+                    <li>Fila {{ cliente.fila }}: {{ cliente.detalle }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- Mostrar clientes actualizados -->
+    {% if actualizados %}
+        <div class="success">
+            <h3>Clientes actualizados:</h3>
+            <ul>
+                {% for cliente in actualizados %}
+                    <li>Fila {{ cliente.fila }}: {{ cliente.detalle }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- Mostrar errores por fila -->
+    {% if errores %}
+        <div class="error">
+            <h3>Filas con errores:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fila</th>
+                        <th>Columna</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fila in errores %}
+                        <tr>
+                            <td>{{ fila.fila }}</td>
+                            <td>{{ fila.columna }}</td>
+                            <td>{{ fila.detalle }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    <!-- Formulario para cargar el archivo Excel -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="archivo_excel">Selecciona un archivo Excel:</label>
+        <input type="file" name="archivo_excel" id="archivo_excel" accept=".xlsx">
+        <br><br>
+        <button type="submit">Cargar</button>
+    </form>
+</body>
+</html>

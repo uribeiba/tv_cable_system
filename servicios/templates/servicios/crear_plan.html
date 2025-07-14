@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load form_filters %}
+{% load static %}
+
+{% block title %}Crear Plan{% endblock %}
+
+{% block header %}Crear Nuevo Plan{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0 text-center">Crear Nuevo Plan</h4>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_tipo" class="form-label">Tipo de Plan:</label>
+                            {{ form.tipo|add_class:"form-select" }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_categoria" class="form-label">Categoría del Plan:</label>
+                            {{ form.categoria|add_class:"form-select" }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_tipo_suscripcion" class="form-label">Tipo de Suscripción:</label>
+                            {{ form.tipo_suscripcion|add_class:"form-select" }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_precio_base" class="form-label">Precio Base:</label>
+                            {{ form.precio_base|add_class:"form-control" }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_descuento" class="form-label">Descuento para Pago Anual (%):</label>
+                            {{ form.descuento|add_class:"form-control" }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_descripcion" class="form-label">Descripción del Plan:</label>
+                            {{ form.descripcion|add_class:"form-control" }}
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Crear Plan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/calculo_total.js' %}"></script>
+<script>
+    // Opcional: Script adicional si necesitas lógica específica
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log("Página de creación de plan cargada correctamente.");
+    });
+</script>
+{% endblock %}
+

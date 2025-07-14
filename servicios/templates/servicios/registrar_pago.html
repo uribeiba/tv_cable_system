@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load filters %}
+{% load humanize %}
+
+{% block title %}Registrar Pago{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Registrar Pago</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                    {% for error in form.non_field_errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        <!-- Contrato -->
+                        <div class="mb-3">
+                            {{ form.contrato.label_tag }}
+                            {{ form.contrato|add_class:"form-select" }}
+                        </div>
+
+                        <!-- Total del contrato -->
+                        <div class="mb-3">
+                            <label class="form-label">Total del Contrato (Referencia):</label>
+                            <div id="total-referencia" class="alert alert-info fw-bold"></div>
+                        </div>
+
+                        <!-- Fecha de Pago -->
+                        <div class="mb-3">
+                            {{ form.fecha_pago.label_tag }}
+                            {{ form.fecha_pago|add_class:"form-control" }}
+                        </div>
+
+                        <!-- Monto Pagado -->
+                        <div class="mb-3">
+                            {{ form.monto.label_tag }}
+                            {{ form.monto|add_class:"form-control" }}
+                        </div>
+
+                        <!-- Método de Pago -->
+                        <div class="mb-3">
+                            {{ form.metodo_pago.label_tag }}
+                            {{ form.metodo_pago|add_class:"form-select" }}
+                        </div>
+
+                        <!-- Periodo Inicio -->
+                        <div class="mb-3">
+                            {{ form.periodo_inicio.label_tag }}
+                            {{ form.periodo_inicio|add_class:"form-control" }}
+                        </div>
+
+                        <!-- Periodo Fin -->
+                        <div class="mb-3">
+                            {{ form.periodo_fin.label_tag }}
+                            {{ form.periodo_fin|add_class:"form-control" }}
+                        </div>
+
+                        <!-- Estado -->
+                        <div class="mb-3">
+                            {{ form.estado.label_tag }}
+                            {{ form.estado|add_class:"form-select" }}
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-block">
+                            <i class="fas fa-save"></i> Registrar Pago
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const contratosTotales = {{ contratos_totales_json|safe }};
+    const selectContrato = document.getElementById("id_contrato");
+    const totalReferenciaDiv = document.getElementById("total-referencia");
+
+    function mostrarTotal() {
+        const contratoId = selectContrato.value;
+        if (contratoId && contratosTotales[contratoId]) {
+            totalReferenciaDiv.innerHTML = `<span>$${contratosTotales[contratoId].toLocaleString('es-CL')}</span>`;
+        } else {
+            totalReferenciaDiv.innerHTML = "<span>-</span>";
+        }
+    }
+
+    if (selectContrato) {
+        selectContrato.addEventListener('change', mostrarTotal);
+        mostrarTotal();
+    }
+</script>
+{% endblock %}

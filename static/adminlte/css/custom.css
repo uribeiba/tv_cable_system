@@ -1,0 +1,44 @@
+.nav-sidebar .nav-link.active {
+    background-color: #005E7B;
+    color: #ffffff;
+}
+
+.nav-sidebar .nav-link:hover {
+    background-color: #005E7B;
+    color: #ffffff;
+}
+.card-header {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.pagination {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los números pasen a una nueva línea */
+    justify-content: center; /* Centra los elementos de paginación */
+    gap: 5px; /* Espaciado entre los números */
+}
+
+.pagination li {
+    list-style: none; /* Elimina los puntos de lista */
+}
+
+.pagination a {
+    text-decoration: none;
+    padding: 5px 10px;
+    margin: 2px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #007bff;
+}
+
+.pagination a:hover {
+    background-color: #f0f0f0;
+    border-color: #ccc;
+}
+
+.pagination .active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}

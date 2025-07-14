@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Resumen Mensual de Pagos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Resumen Mensual de Pagos</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Mes</th>
+                <th>Total Pagado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in resumen %}
+            <tr>
+                <td>{{ item.mes|date:"F Y" }}</td>
+                <td>${{ item.total|floatformat:0|intcomma }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="2">No hay datos.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

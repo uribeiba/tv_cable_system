@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Dirección{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-warning text-white">
+            <h4><i class="fas fa-edit"></i> Editar Dirección</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Guardar Cambios
+                </button>
+                <a href="{% url 'detalle_cliente' direccion.cliente.rut %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,259 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema TV Cable{% endblock %}</title>
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'adminlte/css/custom.css' %}">
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <!-- Header -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="/" class="nav-link">Inicio</a>
+                </li>
+            </ul>
+        
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            <i class="fas fa-user"></i> {{ user.username }}
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link btn btn-link" style="padding: 0;">
+                                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                            </button>
+                        </form>
+                    </li>
+                    
+                {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'login' %}" class="nav-link">
+                            <i class="fas fa-sign-in-alt"></i> Ingresar
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+        
+
+        <!-- Sidebar -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #007DA6;">
+            <a href="/" class="brand-link" style="background-color: #007DA6;">
+                <img src="{% static 'img/icono.jpg' %}" alt="OCB Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light" style="color: #ffffff;">TV Cable OCB</span>
+            </a>
+
+            <div class="sidebar">
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        
+                        <!-- Planes -->
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-list"></i>
+                                <p>Planes
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/planes/" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Lista de Planes</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/planes/crear/" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Crear Plan</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Clientes -->
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>Clientes
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/clientes/" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Lista de Clientes</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/clientes/registrar/" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Registrar Cliente</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'cargar_datos' %}" class="nav-link">
+                                        <i class="nav-icon fas fa-upload"></i>
+                                        <p>Cargar Excel</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Contratos -->
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-file-contract"></i>
+                                <p>Contratos
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/contratar/" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Crear Contrato</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/contratos/" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Lista de Contratos</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Pagos -->
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cash-register"></i>
+                                <p>Pagos
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/pagos/registrar/" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Registrar Pago</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pagos/" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Lista de Pagos</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Reportes -->
+                        <!-- Reportes -->
+<li class="nav-item has-treeview">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-chart-bar"></i>
+        <p>Reportes
+            <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="{% url 'reporte_pagos' %}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Reporte de Pagos</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'reporte_pagos_pendientes' %}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Pagos Pendientes</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'reporte_clientes_sin_pagos' %}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Clientes sin Pagos</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'reporte_resumen_mensual' %}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Resumen Mensual</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">{% block header %}Dashboard{% endblock %}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bloque de mensajes -->
+            <div class="container mt-3">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <section class="content">
+                <div class="container-fluid">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-inline">
+                Sistema TV Cable
+            </div>
+            <strong>&copy; 2025 <a href="#">TV Cable</a>.</strong> Todos los derechos reservados.
+        </footer>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <script src="{% static 'adminlte/js/scripts.js' %}"></script>
+</body>
+</html>

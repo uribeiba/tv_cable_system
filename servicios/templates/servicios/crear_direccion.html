@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Nueva Dirección{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            <h4><i class="fas fa-plus"></i> Nueva Dirección para {{ cliente.nombre_completo }}</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Guardar Dirección
+                </button>
+                <a href="{% url 'detalle_cliente' cliente.rut %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

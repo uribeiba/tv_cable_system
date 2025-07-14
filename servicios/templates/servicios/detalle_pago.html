@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Detalle de Pago{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Detalle del Pago</h2>
+
+    <p><strong>Cliente:</strong> {{ pago.cliente.nombre }} {{ pago.cliente.apellido }}</p>
+    <p><strong>Contrato:</strong> {{ pago.contrato.id }}</p>
+    <p><strong>Fecha de Pago:</strong> {{ pago.fecha_pago }}</p>
+    <p><strong>Monto:</strong> ${{ pago.monto|floatformat:"0"|intcomma }}</p>
+    <p><strong>Método de Pago:</strong> {{ pago.get_metodo_pago_display }}</p>
+    <p><strong>Estado:</strong> {{ pago.get_estado_display }}</p>
+
+    <a href="{% url 'listar_pagos' %}" class="btn btn-secondary mt-2">Volver a Lista de Pagos</a>
+</div>
+{% endblock %}

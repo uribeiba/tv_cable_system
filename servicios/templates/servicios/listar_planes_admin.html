@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Gestión de Planes{% endblock %}
+
+{% block header %}Gestión de Planes{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="text-center mb-4">Gestión de Planes</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Categoría</th>
+                <th>Tipo de Suscripción</th>
+                <th>Precio Base</th>
+                <th>Descuento</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plan in planes %}
+            <tr>
+                <td>{{ plan.categoria }}</td>
+                <td>{{ plan.get_tipo_suscripcion_display }}</td>
+                <td>${{ plan.precio_base|floatformat:2 }}</td>
+                <td>{{ plan.descuento }}%</td>
+                <td>
+                    <a href="{% url 'editar_plan' plan.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <form method="post" action="{% url 'eliminar_plan' plan.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

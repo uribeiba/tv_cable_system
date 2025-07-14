@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Errores de Carga{% endblock %}
+
+{% block header %}Errores Detectados en la Carga{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Errores Encontrados</h4>
+        <p>Se encontraron errores en los datos que intentaste cargar. Revisa los detalles a continuación y corrige los problemas antes de volver a intentar la carga.</p>
+    </div>
+
+   
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Fila</th>
+                    <th>Columna</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for error in errores %}
+                <tr>
+                    <td>{{ error.fila }}</td>
+                    <td>{{ error.columna }}</td>
+                    <td>{{ error.detalle }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    <div class="text-center">
+        <a href="{% url 'cargar_datos' %}" class="btn btn-primary">Volver a Intentar</a>
+    </div>
+</div>
+{% endblock %}
