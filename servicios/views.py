@@ -26,7 +26,7 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
-
+from django.views.decorators.http import require_POST
 
 
 # ------------------------------------------------------------
@@ -144,20 +144,14 @@ def registrar_cliente(request):
     if request.method == 'POST':
         form = ClienteForm(request.POST)
         if form.is_valid():
-            cliente = form.save()  # Guarda el cliente principal
-            # Procesa las direcciones dinámicas
-            direcciones = request.POST.getlist('direccion_instalacion[]')
-            numeros = request.POST.getlist('numero_cliente[]')
-            for direccion, numero in zip(direcciones, numeros):
-                if direccion:  # Guarda solo si hay una dirección
-                    Direccion.objects.create(
-                        cliente=cliente,
-                        direccion_instalacion=direccion,
-                        numero_cliente=numero
-                    )
-            return redirect('nombre_de_la_vista')  # Redirige a una página de éxito
+            cliente = form.save()
+            messages.success(request, 'Cliente registrado correctamente.')
+            return redirect('listar_clientes')  # ✅ Aquí el nombre correcto
+        else:
+            messages.error(request, 'Por favor corrige los errores.')
     else:
         form = ClienteForm()
+    
     return render(request, 'servicios/registrar_cliente.html', {'form': form})
 
 
@@ -808,3 +802,12 @@ def exportar_reporte_pagos_pdf(request):
         return HttpResponse('Error al generar el PDF', status=500)
 
     return response
+
+
+@require_POST
+def eliminar_cliente(request, rut):
+    cliente = get_object_or_404(Cliente, rut=rut)
+    if request.method == "POST":
+        cliente.delete()
+        return redirect('listar_clientes')
+    return render(request, 'confirmar_eliminacion.html', {'cliente': cliente})

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmar Eliminación{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3 class="text-danger">¿Estás seguro que deseas eliminar este cliente?</h3>
+    <p><strong>RUT:</strong> {{ cliente.rut }}</p>
+    <p><strong>Nombre:</strong> {{ cliente.nombre }} {{ cliente.apellido }}</p>
+    <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <a href="{% url 'listar_clientes' %}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    </form>
+</div>
+{% endblock %}

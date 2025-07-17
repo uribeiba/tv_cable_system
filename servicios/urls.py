@@ -16,14 +16,15 @@ urlpatterns = [
     path('planes/eliminar/<int:plan_id>/', views.eliminar_plan, name='eliminar_plan'),
 
     # Rutas para clientes
-    path('clientes/', views.listar_clientes, name='listar_clientes'),
+
     path('clientes/registrar/', views.registrar_cliente, name='registrar_cliente'),
     path('clientes/<str:rut>/', views.detalle_cliente, name='detalle_cliente'),
     path('clientes/<str:rut>/agregar_plan/', views.agregar_plan, name='agregar_plan'),
     path('clientes/<int:cliente_id>/registrar_pago/', views.registrar_pago, name='registrar_pago'),
     path('editar_cliente/<int:id>/', views.editar_cliente, name='editar_cliente'),
     path('clientes/detalle/<str:rut>/', views.detalle_cliente, name='detalle_cliente'),
-    
+    path('clientes/<str:rut>/eliminar/', views.eliminar_cliente, name='eliminar_cliente'),
+    path('clientes/', views.listar_clientes, name='listar_clientes'),
 
     # Rutas para contratos
     path('contratar/', views.contratar_servicio, name='contratar_servicio'),

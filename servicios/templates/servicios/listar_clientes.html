@@ -37,6 +37,35 @@
                         <a href="{% url 'detalle_cliente' cliente.rut %}" class="btn btn-primary btn-sm">
                             Ver Detalles
                         </a>
+
+                        <!-- Botón que abre el modal -->
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmarEliminar{{ cliente.id }}">
+                            Eliminar
+                        </button>
+
+                        <!-- Modal Bootstrap 4 -->
+                        <div class="modal fade" id="confirmarEliminar{{ cliente.id }}" tabindex="-1" role="dialog" aria-labelledby="modalLabel{{ cliente.id }}" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <form action="{% url 'eliminar_cliente' cliente.rut %}" method="post">
+                                {% csrf_token %}
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="modalLabel{{ cliente.id }}">Confirmar Eliminación</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  ¿Estás seguro que deseas eliminar al cliente <strong>{{ cliente.nombre }} {{ cliente.apellido }}</strong>?
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                  <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
                     </td>
                 </tr>
             {% empty %}
